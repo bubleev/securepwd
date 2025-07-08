@@ -4,11 +4,15 @@ import fs from 'fs';
 import path from 'path';
 import { program } from 'commander';
 import { generate_password } from '../pkg/securepwd.js';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const { version } = require('../package.json');
 
 program
   .name('securepwd')
   .description('Generate a secure password from any file')
-  .version('1.1.0', '-v, --version', 'output the version number')
+  .version(version, '-v, --version', 'output the version number')
   .usage('[file] [pin] [length]')
   .argument('[file]', 'Path to any file')
   .argument('[pin]', '4-digit PIN (default: 1024)', '1024')
