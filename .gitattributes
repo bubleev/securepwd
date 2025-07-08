@@ -1,0 +1,12 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# WebAssembly files should be treated as binary
+*.wasm binary
+
+# Shell scripts should have LF line endings
+*.sh text eol=lf
+
+# Batch files should have CRLF line endings
+*.cmd text eol=crlf
+*.bat text eol=crlf

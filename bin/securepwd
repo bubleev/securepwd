@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+# Load .env file if it exists
+if [ -f "$PWD/.env" ]; then
+  export $(grep -v '^#' "$PWD/.env" | xargs)
+fi
+
+exec node --require dotenv/config "$PWD/bin/cli.js" "$@"
