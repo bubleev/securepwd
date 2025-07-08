@@ -1,6 +1,6 @@
 {
   "name": "securepwd",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "A secure password generator that creates deterministic passwords from MP4 files using WebAssembly",
   "main": "bin/cli.js",
   "type": "module",
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "securepwd": "NODE_OPTIONS='--require dotenv/config' node bin/cli.js",
-    "build": "cd wasm-module && wasm-pack build --target nodejs --out-dir ../pkg",
+    "prebuild": "mkdir -p wasm-module && (cp .env wasm-module/.env 2>/dev/null || echo 'No .env file found, using default SECRET')",
+    "build": "npm run prebuild && cd wasm-module && wasm-pack build --target nodejs --out-dir ../pkg",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -8,15 +8,11 @@ import init, { generate_password } from '../pkg/securepwd.js';
 
 program
   .name('securepwd')
-  .description('Generate pass from .mp4 file')
-  .argument('<file>', 'Path to mp4 file')
-  .argument('[pin]', '4-digit PIN (default: 1024)')
-  .argument('[length]', 'Password length (default: 16)')
-  .option('-p, --pin <pin>', '4-digit PIN (alternative to positional argument)')
-  .option('-l, --length <length>', 'Password length (alternative to positional argument)')
-  .action(async (file, pinArg, lengthArg, options) => {
-    // Use PIN from -p/--pin option or from positional argument
-    const pin = options.pin || pinArg || '1024';
+  .description('Generate password from a file')
+  .argument('<file>', 'Path to any file')
+  .argument('[pin]', '4-digit PIN (default: 1024)', '1024')
+  .argument('[length]', 'Password length (default: 16)', '16')
+  .action(async (file, pin, length) => {
     
     // Validate PIN format: exactly 4 digits
     if (!/^\d{4}$/.test(pin)) {
@@ -28,13 +24,8 @@ program
       process.exit(1);
     }
     
-    // Get length from command line arguments (priority: --length/-l > positional length > default 16)
-    let length = 16;
-    if (options.length) {
-      length = parseInt(options.length);
-    } else if (lengthArg) {
-      length = parseInt(lengthArg);
-    }
+    // Parse length to integer
+    length = parseInt(length);
     
     // Validate length
     if (isNaN(length) || length < 1 || length > 64) {
@@ -52,9 +43,9 @@ program
       fs.closeSync(fd);
 
       const salt = path.basename(file);
-      // Combine file data with PIN for more secure hashing
       const combinedData = Buffer.concat([buffer, Buffer.from(pin)]);
-      const result = generate_password(combinedData, salt, length);
+      const secret = process.env.SECRET || '';
+      const result = generate_password(combinedData, salt, length, secret);
       console.log(`🔐 Password: ${result}`);
     } catch (err) {
       console.error('Error:', err.message);
