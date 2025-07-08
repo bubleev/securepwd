@@ -29,6 +29,7 @@ Thumbs.db
 
 # Rust
 /target/
+wasm-module/target/
 **/*.rs.bk
 
 # Node

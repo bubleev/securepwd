@@ -1,12 +1,39 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-# WebAssembly files should be treated as binary
+# Force Unix line endings for all text files
+*.rs text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+yarn.lock text eol=lf
+package-lock.json text eol=lf
+
+# Binary files
 *.wasm binary
+*.mp4 binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.bz2 binary
+*.xz binary
+*.tar binary
+
+# Executable scripts
+bin/* eol=lf
 
 # Shell scripts should have LF line endings
 *.sh text eol=lf
 
 # Batch files should have CRLF line endings
+*.bat text eol=crlf
+*.cmd text eol=crlf
 *.cmd text eol=crlf
 *.bat text eol=crlf
