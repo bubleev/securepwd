@@ -19,7 +19,7 @@ npm install -g securepwd
 Or use without installation:
 
 ```bash
-npx securepwd@latest <path-to-mp4> [pin] [length]
+npx securepwd@latest <path-to-file> [pin] [length]
 ```
 
 ### Basic Usage
@@ -84,26 +84,6 @@ securepwd notes.txt 1234 32   # 32 characters (completely different from 8 and 1
 - Different files will produce different passwords
 - The same file + PIN will always produce the same password
 - Different lengths for the same input produce completely different hashes
-```
-
-## Examples
-
-```bash
-# Using a PDF file with default settings
-securepwd document.pdf
-
-# Using an image file with custom PIN
-securepwd photo.jpg 1234
-
-# Using a text file with custom PIN and length
-securepwd notes.txt 5678 24
-
-# Using minimum password length
-securepwd data.csv 9999 1
-
-# Using maximum password length
-securepwd archive.zip 0000 64
-```
 
 ## Requirements
 
