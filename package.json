@@ -1,6 +1,6 @@
 {
   "name": "securepwd",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A secure password generator that creates deterministic passwords from MP4 files using WebAssembly",
   "main": "bin/cli.js",
   "type": "module",
