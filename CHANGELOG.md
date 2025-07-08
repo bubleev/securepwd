@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-07-08
+### Added
+- Show help menu when no arguments are provided
+- Added `-v` shortcut for version flag
+- Improved CLI usage documentation
+
+### Fixed
+- Fixed command-line argument parsing
+- Better error handling for missing arguments
+
 ## [1.1.0] - 2025-07-08
 ### Added
 - Support for any file type as input (not just MP4)

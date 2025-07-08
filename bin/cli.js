@@ -3,18 +3,23 @@
 import fs from 'fs';
 import path from 'path';
 import { program } from 'commander';
-import init, { generate_password } from '../pkg/securepwd.js';
-// Environment variables are loaded via --require flag in package.json
+import { generate_password } from '../pkg/securepwd.js';
 
 program
   .name('securepwd')
-  .description('Generate password from a file')
-  .argument('<file>', 'Path to any file')
+  .description('Generate a secure password from any file')
+  .version('1.1.0', '-v, --version', 'output the version number')
+  .usage('[file] [pin] [length]')
+  .argument('[file]', 'Path to any file')
   .argument('[pin]', '4-digit PIN (default: 1024)', '1024')
   .argument('[length]', 'Password length (default: 16)', '16')
   .action(async (file, pin, length) => {
+
+    if (!file) {
+      program.help();
+      return;
+    }
     
-    // Validate PIN format: exactly 4 digits
     if (!/^\d{4}$/.test(pin)) {
       console.error('Error: PIN must be exactly 4 digits');
       console.error('Examples:');
@@ -24,10 +29,8 @@ program
       process.exit(1);
     }
     
-    // Parse length to integer
     length = parseInt(length);
     
-    // Validate length
     if (isNaN(length) || length < 1 || length > 64) {
       console.error('Error: Length must be a number between 1 and 64');
       process.exit(1);
@@ -36,8 +39,8 @@ program
 
     try {
       const fd = fs.openSync(file, 'r');
-      // Convert pin to number for Buffer.alloc
-      const bufferSize = 4096; // Fixed buffer size instead of using pin as size
+
+      const bufferSize = 4096;
       const buffer = Buffer.alloc(bufferSize);
       fs.readSync(fd, buffer, 0, bufferSize, offset);
       fs.closeSync(fd);

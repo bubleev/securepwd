@@ -22,8 +22,6 @@ Or use without installation:
 npx securepwd@latest <path-to-mp4> [pin] [length]
 ```
 
-## 💻 Usage
-
 ### Basic Usage
 
 ```bash
