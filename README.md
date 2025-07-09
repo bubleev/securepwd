@@ -1,4 +1,4 @@
-# SecurePWD v2.0.0
+# SecurePWD v2.0.6
 
 ## 🔒 Secure Deterministic Password Generator
 
