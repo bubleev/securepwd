@@ -1,94 +1,134 @@
-# SecurePWD 🔐
+# SecurePWD v2.0.0
 
-SecurePWD is a command-line tool that generates deterministic, cryptographically secure passwords from any file. It uses WebAssembly for high performance and security, ensuring that the same input (file + PIN) will always generate the same password, while different lengths produce completely different hashes.
+## 🔒 Secure Deterministic Password Generator
 
-## 🌟 Features
+Generate strong, unique passwords from any file using WebAssembly. The same input (file + PIN) will always produce the same password, making it perfect for secure password recovery.
 
-- **Deterministic Generation**: Same input (file + PIN) always produces the same password
-- **High Security**: Uses SHA-256 hashing with 1000 iterations
-- **Flexible Output**: Generate passwords from 1 to 64 characters (default: 16)
-- **No Storage Needed**: Passwords are generated on-demand, never stored
-- **Cross-Platform**: Works anywhere Node.js runs
+---
 
-## 🚀 Installation
+## 🚀 Features
+
+- **Military-Grade Security**: SHA-256 hashing with custom character sets  
+- **Deterministic**: Same input = same output, always  
+- **Cross-Platform**: Works everywhere Node.js runs  
+- **Blazing Fast**: WebAssembly-powered  
+- **Zero Dependencies**: For maximum security  
+
+---
+
+## 🛠 Installation
+
+### Option 1: Use as CLI Tool
 
 ```bash
 npm install -g securepwd
 ```
 
-Or use without installation:
+### Option 2: Use as Module
 
 ```bash
-npx securepwd@latest <path-to-file> [pin] [length]
+npm install securepwd
 ```
 
-### Basic Usage
+### Option 3: Build Your Own Version with Custom Secret
 
 ```bash
-securepwd <path-to-file> [pin] [length]
+# Clone the repository
+git clone https://github.com/your-username/securepwd.git
+cd securepwd
+
+# Create .env file with your secret:
+echo "SECRET=your-super-secret-key" > .env
+
+# Install dependencies and build:
+npm install
+npm run build
 ```
 
-### Arguments
+Use the built files from the `pkg/` directory.
 
-- `<path-to-file>`: Path to any file (required)
-- `[pin]`: 4-digit PIN (default: 1024, optional)
-- `[length]`: Password length (default: 16, optional, max: 64)
+---
 
-### Examples
+## 💻 Usage
+
+### CLI Usage
 
 ```bash
-# Generate password with default settings (PIN: 1024, length: 16)
-securepwd document.pdf
+# Basic usage
+securepwd path/to/your/file [PIN] [length]
 
-# Specify PIN only (length: 16)
-securepwd image.jpg 1234
-
-# Specify PIN and length
-securepwd data.json 1234 24
-
-# Different lengths produce completely different hashes
-securepwd notes.txt 1234 8    # 8 characters
-securepwd notes.txt 1234 16   # 16 characters (completely different from 8)
-securepwd notes.txt 1234 32   # 32 characters (completely different from 8 and 16)
+# Examples
+securepwd ~/Documents/passport.pdf
+securepwd ~/Pictures/avatar.jpg 4242 24
 ```
 
-## 🔧 Options
+### Module Usage
 
-### Arguments
+```js
+import { generatePassFromBlob } from 'securepwd';
 
-| Argument | Description | Default |
-|----------|-------------|---------|
-| `file` | Path to any file | (required) |
-| `pin` | 4-digit PIN (0000-9999) | 1024 |
-| `length` | Password length | 16 (max: 64) |
+// From file in Node.js
+const fs = require('fs').promises;
+const file = await fs.readFile('path/to/file');
+const password = await generatePassFromBlob(file, '4242', 16);
 
-## 🔒 Security
+// In browser
+const fileInput = document.querySelector('input[type="file"]');
+const file = fileInput.files[0];
+const password = await generatePassFromBlob(file, '4242', 16);
+```
 
-- Uses SHA-256 cryptographic hash function
-- Performs 1000 iterations of hashing
-- Includes file content, PIN, and secret key in hash calculation
-- Different password lengths produce completely different hashes
-- No data is ever stored or transmitted
+---
 
-## 🤔 Why Use This?
+## ⚙️ Parameters
 
-1. **Memorize One PIN**, not multiple passwords
-2. **No Password Storage** - Generate passwords on-demand
-3. **High Entropy** - Any file can be used as an entropy source
-4. **Portable** - Works with any file on your system
-5. **Deterministic** - Same input always produces the same output
+| Parameter | Required | Default | Description                         |
+|-----------|----------|---------|-------------------------------------|
+| `file`    | Yes      | –       | Path to any file or Blob object     |
+| `PIN`     | No       | `1024`  | 4+ digit number for extra security  |
+| `length`  | No       | `16`    | Password length (1–64 characters)   |
 
-## 📝 Notes
+---
 
-- The input file acts as a key - keep it secure
-- Different files will produce different passwords
-- The same file + PIN will always produce the same password
-- Different lengths for the same input produce completely different hashes
+## 🔄 Backward Compatibility
 
-## Requirements
+For compatibility with v1.x passwords:
 
-- Node.js 18 or higher
+```bash
+npm install securepwd@1.2.0
+```
 
-## License
+---
 
-MIT
+## 📦 Build from Source
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/securepwd.git
+cd securepwd
+
+# Install dependencies
+npm install
+
+# Set your secret
+echo "SECRET=your-custom-secret-here" > .env
+
+# Build the project
+npm run build
+```
+
+The built files will be in the `pkg/` directory.
+
+---
+
+## 🔒 Security Notes
+
+- The `SECRET` in `.env` is used to salt the password generation  
+- **Never commit your `.env` file to version control**  
+- For production use, consider using environment variables directly  
+
+---
+
+## 📄 License
+
+MIT © 2025 Bubleev
