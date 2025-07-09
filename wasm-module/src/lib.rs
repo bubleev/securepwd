@@ -3,15 +3,17 @@ use sha2::{Sha256, Digest};
 
 include!(concat!(env!("OUT_DIR"), "/secret.rs"));
 
+const CHARSET: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{};:,.<>?";
+
 #[wasm_bindgen]
 pub fn generate_password(data: &[u8], salt: &str, length: usize) -> String {
     let mut hasher = Sha256::new();
-    
+
     hasher.update(length.to_string().as_bytes());
     hasher.update(data);
     hasher.update(salt.as_bytes());
     hasher.update(SECRET.as_bytes());
-    
+
     let mut result = hasher.finalize();
 
     for _ in 0..1000 {
@@ -21,6 +23,13 @@ pub fn generate_password(data: &[u8], salt: &str, length: usize) -> String {
         result = h.finalize();
     }
 
-    let hex = hex::encode(&result);
-    hex[..length.min(64)].to_string()
+    let charset_len = CHARSET.len();
+    let password: String = result
+        .iter()
+        .cycle()
+        .take(length)
+        .map(|b| CHARSET[(*b as usize) % charset_len] as char)
+        .collect();
+
+    password
 }
