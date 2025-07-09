@@ -1,6 +1,6 @@
 {
   "name": "securepwd",
-  "version": "2.0.0",
+  "version": "2.0.6",
   "description": "A secure password generator that creates deterministic passwords from any files using WebAssembly",
   "main": "./lib/index.js",
   "type": "module",
@@ -36,10 +36,15 @@
     "bin/cli.js",
     "lib/index.js",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "engines": {
     "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bubleev/securepwd.git"
   },
   "keywords": [
     "secure",
@@ -51,7 +56,7 @@
     "files",
     "crypto"
   ],
-  "author": "bubleev",
+  "author": "Bubleev",
   "license": "MIT",
   "homepage": "https://www.npmjs.com/package/securepwd"
 }

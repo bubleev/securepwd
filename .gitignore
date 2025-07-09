@@ -9,6 +9,7 @@ node_modules/
 npm-debug.log*
 
 # Build output
+package/
 pkg/
 
 # OS generated files
@@ -19,6 +20,7 @@ pkg/
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.tgz
 
 # Editor directories and files
 .idea/
