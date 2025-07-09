@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-07-09
+### Added
+- Full file hashing using SHA-256 for better security
+- Support for ES Modules (type: "module" in package.json)
+
+### Changed
+- Updated password generation to use full file hash instead of first 4KB
+- Improved CLI performance with async file operations
+
+### Fixed
+- Fixed module imports for ES Modules compatibility
+- Resolved file path resolution issues on different platforms
+
 ## [1.1.1] - 2025-07-08
 ### Added
 - Show help menu when no arguments are provided

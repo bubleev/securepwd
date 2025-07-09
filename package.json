@@ -1,17 +1,22 @@
 {
   "name": "securepwd",
-  "version": "1.1.2",
-  "description": "A secure password generator that creates deterministic passwords from MP4 files using WebAssembly",
-  "main": "bin/cli.js",
+  "version": "1.2.0",
+  "description": "A secure password generator that creates deterministic passwords from any files using WebAssembly",
+  "main": "./lib/index.js",
   "type": "module",
+  "exports": {
+    "import": "./lib/index.js",
+    "bin": "./bin/cli.js"
+  },
   "bin": {
     "securepwd": "bin/cli.js"
   },
   "scripts": {
     "securepwd": "NODE_OPTIONS='--require dotenv/config' node bin/cli.js",
     "prebuild": "mkdir -p wasm-module && (cp .env wasm-module/.env 2>/dev/null || echo 'No .env file found, using default SECRET')",
-    "build": "npm run prebuild && cd wasm-module && wasm-pack build --target nodejs --out-dir ../pkg",
-    "prepublishOnly": "npm run build",
+    "build:web": "npm run prebuild && cd wasm-module && wasm-pack build --target bundler --out-dir ../pkg/web",
+    "build:cli": "npm run prebuild && cd wasm-module && wasm-pack build --target nodejs --out-dir ../pkg/node",
+    "build": "npm run build:web && npm run build:cli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -22,12 +27,14 @@
     "wasm-pack": "^0.12.0"
   },
   "files": [
-    "pkg/package.json",
-    "pkg/securepwd.d.ts",
-    "pkg/securepwd.js",
-    "pkg/securepwd_bg.wasm",
-    "pkg/securepwd_bg.wasm.d.ts",
+    "pkg/web/*",
+    "pkg/web/*.*",
+    "pkg/web/**/*",
+    "pkg/node/*",
+    "pkg/node/*.*",
+    "pkg/node/**/*",
     "bin/cli.js",
+    "lib/index.js",
     "README.md",
     "LICENSE"
   ],
@@ -41,7 +48,7 @@
     "wasm",
     "webassembly",
     "cli",
-    "mp4",
+    "files",
     "crypto"
   ],
   "author": "bubleev",

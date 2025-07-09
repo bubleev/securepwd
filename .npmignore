@@ -1,6 +1,7 @@
 # Source files
-src/
-wasm-module/
+/src
+/wasm-module
+!/pkg
 
 # Test files
 __tests__/
